@@ -11,4 +11,8 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  setSelectedUser(event: any): void {
+    console.log(event)
+  }
+
 }

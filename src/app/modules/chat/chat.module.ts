@@ -7,6 +7,7 @@ import { ChatWrapperHeaderComponent } from './chat-wrapper-header/chat-wrapper-h
 import { ChatWrapperMessagesComponent } from './chat-wrapper-messages/chat-wrapper-messages.component';
 import { ChatReadmoreButtonComponent } from './chat-readmore-button/chat-readmore-button.component';
 import { ChatWrapperTextareaComponent } from './chat-wrapper-textarea/chat-wrapper-textarea.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -21,7 +22,7 @@ import { ChatWrapperTextareaComponent } from './chat-wrapper-textarea/chat-wrapp
     ChatWrapperTextareaComponent
   ],
   imports: [
-    CommonModule
+    SharedModule
   ]
 })
 export class ChatModule { }
