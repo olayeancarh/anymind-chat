@@ -1,7 +1,7 @@
-<form class="w-full">
+<form class="w-full" [formGroup]="messageForm" #messageData="ngForm" (submit)="getUserMessage(messageData)" data-testid="form">
   <label for="chat" class="sr-only">Type your message here</label>
   <div class="flex items-center p-1 rounded-sm bg-gray-50">
-    <textarea id="chat" rows="2"
+    <textarea id="chat" rows="2" [formControlName]="'message'" data-testid="message-value"
       class="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-md border border-gray-300"
       placeholder="Type your message here..."></textarea>
     <button type="submit"

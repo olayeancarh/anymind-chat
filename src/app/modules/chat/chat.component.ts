@@ -10,6 +10,7 @@ export class ChatComponent implements OnInit {
   channel!: Channel;
   user!: User;
   old!: boolean;
+  message: any;
 
   constructor() { }
 
@@ -22,6 +23,10 @@ export class ChatComponent implements OnInit {
 
   setSelectedChannel(event: any): void {
     this.channel = event;
+  }
+
+  setUserMessage(event: any): void {
+    this.message = event;
   }
 
   readMoreMessages(event: any): void {
