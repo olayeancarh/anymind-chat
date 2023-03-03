@@ -16,11 +16,11 @@
               <chat-wrapper-header [channel]="channel"></chat-wrapper-header>
               <div class="px-4 py-2">
                 <div class="relative z-[1] h-full flex flex-col overflow-hidden">
-                  <chat-readmore-button [old]="true"></chat-readmore-button>
+                  <chat-readmore-button [old]="true" (readMoreMessage)="readMoreMessages($event)"></chat-readmore-button>
                   <div class="flex overflow-y-auto flex-col-reverse h-[calc(100vh-20rem)]">
                     <chat-wrapper-messages></chat-wrapper-messages>
                   </div>
-                  <chat-readmore-button [old]="false"></chat-readmore-button>
+                  <chat-readmore-button [old]="false" (readMoreMessage)="readMoreMessages($event)"></chat-readmore-button>
                   <div class="flex items-end border-t">
                     <chat-wrapper-textarea class="w-full"></chat-wrapper-textarea>
                   </div>

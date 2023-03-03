@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'chat-readmore-button',
@@ -7,10 +7,15 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ChatReadmoreButtonComponent implements OnInit {
 
   @Input() old: boolean | undefined
+  @Output() readMoreMessage = new EventEmitter();
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  readMoreMessages(old: boolean | undefined) {
+    this.readMoreMessage.emit(old);
   }
 
 }
