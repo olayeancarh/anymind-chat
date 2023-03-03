@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { User } from 'src/app/core/models';
 
 @Component({
   selector: 'chat-select-user',
@@ -9,7 +10,7 @@ export class ChatSelectUserComponent implements OnInit {
   userForm!: FormGroup;
   @Output() selectedUser = new EventEmitter<any>();
 
-  users = [
+  users: User[] = [
     {
       userId: 'Joyse',
       userName: 'Joyse',

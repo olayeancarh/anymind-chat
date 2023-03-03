@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Channel, User } from 'src/app/core/models';
 
 @Component({
   selector: 'app-chat',
@@ -6,13 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatComponent implements OnInit {
 
+  channel!: Channel;
+  user!: User;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
   setSelectedUser(event: any): void {
-    console.log(event)
+    this.user = event;
+  }
+
+  setSelectedChannel(event: any): void {
+    this.channel = event;
   }
 
 }

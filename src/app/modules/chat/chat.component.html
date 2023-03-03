@@ -9,11 +9,11 @@
         <div class="grid grid-cols-3 divide-x h-full">
           <div class="p-1 md:p-4 lg:p-4">
             <chat-select-user (selectedUser)="setSelectedUser($event)"></chat-select-user>
-            <chat-select-channel></chat-select-channel>
+            <chat-select-channel (selectedChannel)="setSelectedChannel($event)"></chat-select-channel>
           </div>
           <div class="col-span-2">
             <div class="flex flex-col">
-              <chat-wrapper-header></chat-wrapper-header>
+              <chat-wrapper-header [channel]="channel"></chat-wrapper-header>
               <div class="px-4 py-2">
                 <div class="relative z-[1] h-full flex flex-col overflow-hidden">
                   <chat-readmore-button [old]="true"></chat-readmore-button>
