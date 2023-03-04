@@ -13,14 +13,17 @@ export class ChatSelectChannelComponent implements OnInit {
     {
       channelId: '1',
       channelValue: 'General',
+      active: true
     },
     {
       channelId: '2',
       channelValue: 'LGTM',
+      active: false
     },
     {
       channelId: '3',
       channelValue: 'Technology',
+      active: false
     },
   ];
 
@@ -30,6 +33,8 @@ export class ChatSelectChannelComponent implements OnInit {
   }
 
   getSelectedChannel(channel: Channel): void {
+    this.channels.forEach(channel => channel.active = false);
+    channel.active = true;
     this.selectedChannel.emit(channel);
   }
 

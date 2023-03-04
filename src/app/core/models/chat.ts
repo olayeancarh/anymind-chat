@@ -1,6 +1,7 @@
 export interface Channel {
   channelId: string;
   channelValue: string;
+  active?: boolean
 }
 
 export interface User {
