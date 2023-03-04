@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
+import { GraphQLModule } from './graphql.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,10 @@ import { CoreModule } from './core/core.module';
     SharedModule,
 
     // Core Module
-    CoreModule
+    CoreModule,
+
+    // GraphQL Module
+    GraphQLModule
   ],
   providers: [],
   bootstrap: [AppComponent]
