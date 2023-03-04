@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Channel, User } from 'src/app/core/models';
+import { Channel, MessageResponse, User } from 'src/app/core/models';
+import { ChatService } from 'src/app/core/services/chat.service';
 
 @Component({
   selector: 'app-chat',
@@ -11,8 +12,10 @@ export class ChatComponent implements OnInit {
   user!: User;
   old!: boolean;
   message: any;
+  messages!: MessageResponse[];
+  loading: boolean = false;
 
-  constructor() { }
+  constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
   }
@@ -23,6 +26,7 @@ export class ChatComponent implements OnInit {
 
   setSelectedChannel(event: any): void {
     this.channel = event;
+    this.getLatestMessages(this.channel.channelId);
   }
 
   setUserMessage(event: any): void {
@@ -31,6 +35,14 @@ export class ChatComponent implements OnInit {
 
   readMoreMessages(event: any): void {
     this.old = event;
+  }
+
+  getLatestMessages(channelId: string): void {
+    this.chatService.getLatestMessages(channelId).subscribe(({ data, loading }) => {
+      this.messages = [...data.fetchLatestMessages].reverse();
+      this.loading = loading;
+      console.log(this.messages);
+    })
   }
 
 }

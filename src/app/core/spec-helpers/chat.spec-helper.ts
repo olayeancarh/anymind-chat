@@ -1,6 +1,30 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { MessagesResponse } from '../models';
+
+export const messages: any = {
+  fetchLatestMessages: [
+    {
+      messageId: '7441760356450402007',
+      text: 'Good',
+      datetime: '2023-03-04T00:07:20.526Z',
+      userId: 'Sam',
+    },
+    {
+      messageId: '796134191200126600',
+      text: 'Testing',
+      datetime: '2023-03-04T00:07:11.926Z',
+      userId: 'Sam',
+    },
+    {
+      messageId: '1309243389008329346',
+      text: 'Hello',
+      datetime: '2023-03-04T00:06:58.736Z',
+      userId: 'Sam',
+    },
+  ],
+};
 
 /**
  * Finds a nested Component by its selector, e.g. `app-example`.
@@ -18,11 +42,10 @@ export function findComponent<T>(
 
 export function findComponents<T>(
   fixture: ComponentFixture<T>,
-  selector: string,
+  selector: string
 ): DebugElement[] {
   return fixture.debugElement.queryAll(By.css(selector));
 }
-
 
 /**
  * Finds a single element inside the Component by the given CSS selector.
@@ -61,7 +84,10 @@ export function testIdSelector(testId: string): string {
  * @param testId Test id set by `data-testid`
  *
  */
-export function findEl<T>(fixture: ComponentFixture<T>, testId: string): DebugElement {
+export function findEl<T>(
+  fixture: ComponentFixture<T>,
+  testId: string
+): DebugElement {
   return queryByCss<T>(fixture, testIdSelector(testId));
 }
 
@@ -75,7 +101,7 @@ export function findEl<T>(fixture: ComponentFixture<T>, testId: string): DebugEl
 export function dispatchFakeEvent(
   element: EventTarget,
   type: string,
-  bubbles: boolean = false,
+  bubbles: boolean = false
 ): void {
   const event = document.createEvent('Event');
   event.initEvent(type, bubbles, false);
@@ -93,13 +119,17 @@ export function dispatchFakeEvent(
  */
 export function setFieldElementValue(
   element: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement,
-  value: string,
+  value: string
 ): void {
   element.value = value;
   // Dispatch an `input` or `change` fake event
   // so Angular form bindings take notice of the change.
   const isSelect = element instanceof HTMLSelectElement;
-  dispatchFakeEvent(element, isSelect ? 'change' : 'input', isSelect ? false : true);
+  dispatchFakeEvent(
+    element,
+    isSelect ? 'change' : 'input',
+    isSelect ? false : true
+  );
 }
 
 /**
@@ -112,7 +142,7 @@ export function setFieldElementValue(
 export function setFieldValue<T>(
   fixture: ComponentFixture<T>,
   testId: string,
-  value: string,
+  value: string
 ): void {
   setFieldElementValue(findEl(fixture, testId).nativeElement, value);
 }

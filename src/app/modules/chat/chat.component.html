@@ -1,5 +1,5 @@
 <div class="relative overflow-hidden">
-  <div class="relative mx-auto mt-2 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+  <div class="relative mx-auto mt-2 w-full max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col">
       <section>
         <h1 class="text-2xl font-semibold tracking-tight text-slate-800">1 day chat app</h1>
@@ -18,7 +18,7 @@
                 <div class="relative z-[1] h-full flex flex-col overflow-hidden">
                   <chat-readmore-button [old]="true" (readMoreMessage)="readMoreMessages($event)"></chat-readmore-button>
                   <div class="flex overflow-y-auto flex-col-reverse h-[calc(100vh-20rem)]">
-                    <chat-wrapper-messages></chat-wrapper-messages>
+                    <chat-wrapper-messages [messages]="messages"></chat-wrapper-messages>
                   </div>
                   <chat-readmore-button [old]="false" (readMoreMessage)="readMoreMessages($event)"></chat-readmore-button>
                   <div class="flex items-end border-t">
