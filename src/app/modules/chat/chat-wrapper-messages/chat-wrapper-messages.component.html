@@ -13,6 +13,13 @@
       <p>{{ message.datetime | date:'shortTime' }}</p>
     </div>
   </div>
+  <div *ngIf="!messages || messages.length === 0" class="relative my-auto mx-2 text-sm font-medium text-center">
+    <p class="font-bold">NOTE:</p>
+    <p>Kindly select a user and channel to chat</p>
+    <p>You can then send your message.</p>
+    <p>If anyone is available online to chat, you will get a reply</p>
+    <p>Thanks. 😊</p>
+  </div>
   <!-- <div class="flex flex-row-reverse items-end my-2">
     <div class="relative flex flex-0 flex-col items-center justify-center w-10 my-auto">
       <img src="https://angular-test-backend-yc4c5cvnnq-an.a.run.app/Sam.png"
