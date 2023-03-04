@@ -22,7 +22,7 @@
                   </div>
                   <chat-readmore-button [old]="false" (readMoreMessage)="readMoreMessages($event)"></chat-readmore-button>
                   <div class="flex items-end border-t">
-                    <chat-wrapper-textarea (userMessage)="setUserMessage($event)" class="w-full"></chat-wrapper-textarea>
+                    <chat-wrapper-textarea (userMessage)="postUserMessage($event)" class="w-full"></chat-wrapper-textarea>
                   </div>
                 </div>
               </div>

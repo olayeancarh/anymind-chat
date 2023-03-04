@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { LOAD_LATEST_MESSAGES, LOAD_MORE_MESSAGES } from '../queries';
-import { MessageReq, MessagesResponse } from '../models';
+import { LOAD_LATEST_MESSAGES, LOAD_MORE_MESSAGES, POST_MESSAGES } from '../queries';
+import { MessageReq, MessagesResponse, PostMessageReq } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -22,5 +22,12 @@ export class ChatService {
       query: LOAD_MORE_MESSAGES,
       variables: params,
     }).valueChanges;
+  }
+
+  postMessage(params: PostMessageReq): Observable<any> {
+    return this.appollo.mutate<MessagesResponse>({
+      mutation: POST_MESSAGES,
+      variables: params
+    });
   }
 }

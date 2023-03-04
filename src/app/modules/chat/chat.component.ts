@@ -3,6 +3,7 @@ import {
   Channel,
   MessageReq,
   MessageResponse,
+  PostMessageReq,
   User,
 } from 'src/app/core/models';
 import { ChatService } from 'src/app/core/services/chat.service';
@@ -32,8 +33,21 @@ export class ChatComponent implements OnInit {
     this.getLatestMessages(this.channel.channelId);
   }
 
-  setUserMessage(event: any): void {
-    this.message = event;
+  postUserMessage(event: any): void {
+    if (this.channel && this.user) {
+      const data: PostMessageReq = {
+        channelId: this.channel.channelId,
+        text: event.message,
+        userId: this.user.userId,
+      };
+
+      this.chatService.postMessage(data).subscribe({
+        next: (data) => console.log(data),
+        error: (error) => {
+          console.log(error)
+        },
+      });
+    }
   }
 
   readMoreMessages(event: any): void {
@@ -62,7 +76,9 @@ export class ChatComponent implements OnInit {
       .getMoreMessages(messageValues)
       .subscribe(({ data, loading }) => {
         const new_messages = [...data.fetchMoreMessages].reverse();
-        this.messages = this.old ? [...new_messages, ...this.messages] : [...this.messages, ...new_messages];
+        this.messages = this.old
+          ? [...new_messages, ...this.messages]
+          : [...this.messages, ...new_messages];
         this.loading = loading;
       });
   }

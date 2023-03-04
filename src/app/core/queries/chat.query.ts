@@ -33,3 +33,14 @@ export const LOAD_MORE_MESSAGES = gql`
     }
   }
 `;
+
+export const POST_MESSAGES = gql`
+  mutation ($channelId: String!, $text: String!, $userId: String!) {
+    postMessage(channelId: $channelId, text: $text, userId: $userId) {
+      datetime
+      userId
+      text
+      messageId
+    }
+  }
+`;
