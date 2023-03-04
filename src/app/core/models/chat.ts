@@ -13,6 +13,13 @@ export interface MessageResponse {
   text: string;
   datetime: string;
   userId: string;
+  __typename?: "Message"
+}
+
+export interface MessageReq {
+  channelId: string;
+  messageId?: string;
+  old?: boolean;
 }
 
 export interface MessagesResponse {

@@ -5,9 +5,9 @@ import {
 } from 'apollo-angular/testing';
 
 import { ChatService } from './chat.service';
-import { MessagesResponse } from '../models';
-import { LOAD_LATEST_MESSAGES } from '../queries';
+import { LOAD_LATEST_MESSAGES, LOAD_MORE_MESSAGES } from '../queries';
 import { messages } from '../spec-helpers/chat.spec-helper';
+import { MessageReq } from '../models';
 
 describe('ChatService', () => {
   let service: ChatService;
@@ -27,11 +27,22 @@ describe('ChatService', () => {
   });
 
   it('should fetch messages', () => {
-    service.getLatestMessages('1').subscribe((server_messages) => {
+    service.getLatestMessages({ channelId: "1" }).subscribe((server_messages) => {
       expect(server_messages.data).toEqual(messages);
     });
 
     const req = controller.expectOne(LOAD_LATEST_MESSAGES);
+    req.flushData(messages);
+    controller.verify();
+  });
+
+  xit('should fetch more messages', () => {
+    const params: MessageReq = { channelId: "1", messageId: "7441760356450402007", old: true };
+    service.getLatestMessages(params).subscribe((server_messages) => {
+      expect(server_messages.data).toEqual(messages);
+    });
+
+    const req = controller.expectOne(LOAD_MORE_MESSAGES);
     req.flushData(messages);
     controller.verify();
   });

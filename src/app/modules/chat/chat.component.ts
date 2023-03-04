@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Channel, MessageResponse, User } from 'src/app/core/models';
+import {
+  Channel,
+  MessageReq,
+  MessageResponse,
+  User,
+} from 'src/app/core/models';
 import { ChatService } from 'src/app/core/services/chat.service';
 
 @Component({
@@ -7,7 +12,6 @@ import { ChatService } from 'src/app/core/services/chat.service';
   templateUrl: './chat.component.html',
 })
 export class ChatComponent implements OnInit {
-
   channel!: Channel;
   user!: User;
   old!: boolean;
@@ -15,10 +19,9 @@ export class ChatComponent implements OnInit {
   messages!: MessageResponse[];
   loading: boolean = false;
 
-  constructor(private chatService: ChatService) { }
+  constructor(private chatService: ChatService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   setSelectedUser(event: any): void {
     this.user = event;
@@ -35,14 +38,32 @@ export class ChatComponent implements OnInit {
 
   readMoreMessages(event: any): void {
     this.old = event;
+    let data: MessageReq = {
+      channelId: this.channel.channelId,
+      old: this.old,
+      messageId: this.old
+        ? this.messages[0].messageId
+        : this.messages[this.messages.length - 1].messageId,
+    };
+    this.getMoreMessages(data);
   }
 
   getLatestMessages(channelId: string): void {
-    this.chatService.getLatestMessages(channelId).subscribe(({ data, loading }) => {
-      this.messages = [...data.fetchLatestMessages].reverse();
-      this.loading = loading;
-      console.log(this.messages);
-    })
+    this.chatService
+      .getLatestMessages({ channelId })
+      .subscribe(({ data, loading }) => {
+        this.messages = [...data.fetchLatestMessages].reverse();
+        this.loading = loading;
+      });
   }
 
+  getMoreMessages(messageValues: MessageReq): void {
+    this.chatService
+      .getMoreMessages(messageValues)
+      .subscribe(({ data, loading }) => {
+        const new_messages = [...data.fetchMoreMessages].reverse();
+        this.messages = this.old ? [...new_messages, ...this.messages] : [...this.messages, ...new_messages];
+        this.loading = loading;
+      });
+  }
 }
