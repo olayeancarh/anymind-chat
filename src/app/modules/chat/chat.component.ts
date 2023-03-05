@@ -33,7 +33,7 @@ export class ChatComponent implements OnInit {
   setSelectedChannel(event: any): void {
     this.channel = event;
     this.chatDetails = { ...this.chatDetails, channel: this.channel }
-    this.getLatestMessages(this.channel.channelId);
+    this.user && this.getLatestMessages(this.channel.channelId);
   }
 
   postUserMessage(event: any): void {
