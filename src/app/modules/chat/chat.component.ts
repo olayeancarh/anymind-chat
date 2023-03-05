@@ -27,14 +27,14 @@ export class ChatComponent implements OnInit {
 
   setSelectedUser(event: any): void {
     this.user = event;
-    this.channel && this.getLatestMessages(this.channel.channelId);
+    this.channel && this.getLatestMessages({ channelId: this.channel.channelId });
     this.chatDetails = { ...this.chatDetails, user: this.user }
   }
 
   setSelectedChannel(event: any): void {
     this.channel = event;
     this.chatDetails = { ...this.chatDetails, channel: this.channel }
-    this.user && this.getLatestMessages(this.channel.channelId);
+    this.user && this.getLatestMessages({ channelId: this.channel.channelId });
   }
 
   postUserMessage(event: any): void {
@@ -68,9 +68,9 @@ export class ChatComponent implements OnInit {
     this.getMoreMessages(data);
   }
 
-  getLatestMessages(channelId: string): void {
+  getLatestMessages(messageValues: MessageReq): void {
     this.chatService
-      .getLatestMessages({ channelId })
+      .getLatestMessages(messageValues)
       .subscribe(({ data, loading }) => {
         this.messages = [...data.fetchLatestMessages].reverse();
         this.loading = loading;

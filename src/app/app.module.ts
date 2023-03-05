@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { GraphQLModule } from './graphql.module';
+import { RootStoreModule } from './core/store/root-store.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,9 @@ import { GraphQLModule } from './graphql.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
+
+    // Store Module
+    RootStoreModule,
 
     // Shared Module
     SharedModule,

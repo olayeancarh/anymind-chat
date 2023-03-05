@@ -39,7 +39,7 @@ describe('ChatComponent', () => {
       spyOn(component, 'getLatestMessages');
       const selectComponent = findComponent(fixture, 'chat-select-channel');
       component.user = {userId: "1", userName: "Sam"};
-      selectComponent.triggerEventHandler('selectedChannel', '1');
+      selectComponent.triggerEventHandler('selectedChannel', { channelId: '1' });
       expect(component.getLatestMessages).toHaveBeenCalled();
     });
   });

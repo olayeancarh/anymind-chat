@@ -24,6 +24,13 @@ export class ChatService {
     }).valueChanges;
   }
 
+  getMessages(params: MessageReq): Observable<any> {
+    if (params.old && params.messageId) {
+      return this.getMoreMessages(params);
+    }
+    return this.getLatestMessages(params);
+  }
+
   postMessage(params: PostMessageReq): Observable<any> {
     return this.appollo.mutate<MessagesResponse>({
       mutation: POST_MESSAGES,
