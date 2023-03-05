@@ -19,6 +19,7 @@ export class ChatComponent implements OnInit {
   message: any;
   messages!: MessageResponse[];
   loading: boolean = false;
+  chatDetails: any = {};
 
   constructor(private chatService: ChatService) {}
 
@@ -26,10 +27,12 @@ export class ChatComponent implements OnInit {
 
   setSelectedUser(event: any): void {
     this.user = event;
+    this.chatDetails = { ...this.chatDetails, user: this.user }
   }
 
   setSelectedChannel(event: any): void {
     this.channel = event;
+    this.chatDetails = { ...this.chatDetails, channel: this.channel }
     this.getLatestMessages(this.channel.channelId);
   }
 

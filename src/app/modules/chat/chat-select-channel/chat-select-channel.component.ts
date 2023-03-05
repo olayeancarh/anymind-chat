@@ -13,7 +13,7 @@ export class ChatSelectChannelComponent implements OnInit {
     {
       channelId: '1',
       channelValue: 'General',
-      active: true
+      active: false
     },
     {
       channelId: '2',

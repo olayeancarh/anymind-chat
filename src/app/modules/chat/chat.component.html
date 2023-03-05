@@ -35,7 +35,7 @@
 
                   <!-- Textarea to fill and send a message -->
                   <div class="absolute flex inset-x-0 bottom-0 items-end w-full">
-                    <chat-wrapper-textarea class="w-full" (userMessage)="postUserMessage($event)"
+                    <chat-wrapper-textarea class="w-full" (userMessage)="postUserMessage($event)" [chatDetails]="chatDetails"
                       class="w-full"></chat-wrapper-textarea>
                   </div>
                 </div>
