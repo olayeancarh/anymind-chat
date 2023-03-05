@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { MessageResponse } from 'src/app/core/models';
+import { MessageResponse, User } from 'src/app/core/models';
 
 @Component({
   selector: 'chat-wrapper-messages',
@@ -8,6 +8,7 @@ import { MessageResponse } from 'src/app/core/models';
 export class ChatWrapperMessagesComponent implements OnInit {
 
   @Input() messages: MessageResponse[] = [];
+  @Input() user!: User;
 
   constructor() { }
 

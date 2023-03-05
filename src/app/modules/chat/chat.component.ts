@@ -27,6 +27,7 @@ export class ChatComponent implements OnInit {
 
   setSelectedUser(event: any): void {
     this.user = event;
+    this.channel && this.getLatestMessages(this.channel.channelId);
     this.chatDetails = { ...this.chatDetails, user: this.user }
   }
 
@@ -45,9 +46,11 @@ export class ChatComponent implements OnInit {
       };
 
       this.chatService.postMessage(data).subscribe({
-        next: (data) => console.log(data),
+        next: ({ data }) => {
+          if (data) { this.messages.push({ ...data.postMessage, notsent: false }) }
+        },
         error: (error) => {
-          console.log(error)
+          if (error) {this.messages.push({ ...data, notsent: true, messageId: '', datetime: ''})}
         },
       });
     }

@@ -15,6 +15,7 @@ export interface MessageResponse {
   datetime: string;
   userId: string;
   __typename?: 'Message';
+  notsent?: boolean;
 }
 
 export interface MessageReq {

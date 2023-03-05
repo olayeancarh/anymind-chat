@@ -29,19 +29,12 @@ export class ChatWrapperTextareaComponent implements OnInit, OnChanges {
     this.messageForm = this._formBuilder.group({
       message: [{ value: '', disabled: true }, Validators.required],
     });
-
-    this.disableForm();
   }
 
   getUserMessage(form: FormGroupDirective) {
     if (form.valid) {
       this.userMessage.emit(form.value);
-    }
-  }
-
-  disableForm(): void {
-    if (this.chatDetails && this.chatDetails.user && this.chatDetails.channel) {
-      this.messageForm.get('message')?.enable();
+      form.resetForm();
     }
   }
 
