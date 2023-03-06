@@ -33,3 +33,19 @@ export interface PostMessageReq {
 export interface MessagesResponse {
   fetchLatestMessages: MessageResponse[];
 }
+
+export interface ChatResponseLatest {
+  data: {
+    fetchLatestMessages: MessageResponse[];
+  }
+  loading: boolean;
+  networkStatus: number;
+}
+
+export interface ChatResponseMore {
+  data: {
+    fetchMoreMessages: MessageResponse[];
+  }
+  loading: boolean;
+  networkStatus: number;
+}

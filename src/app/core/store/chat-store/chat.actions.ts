@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { MessageReq, MessageResponse } from '../../models';
+import { ChatResponseLatest, ChatResponseMore, MessageReq, MessageResponse } from '../../models';
 
 export enum ChatActionTypes {
   LoadGeneralChats = '[General Chats] Load General Chats',
@@ -13,6 +13,8 @@ export enum ChatActionTypes {
   LoadTechnologyChats = '[Tech Chats] Load Tech Chats',
   LoadTechnologyChatsSuccess = '[Tech Chats] Load Tech Chats Success',
   LoadTechnologyChatsFail = '[Tech Chats] Load Tech Chats Fail',
+
+  ClearMessages = '[Chats] Clear Chats',
 }
 
 export class LoadGeneralChats implements Action {
@@ -22,7 +24,7 @@ export class LoadGeneralChats implements Action {
 
 export class LoadGeneralChatsSuccess implements Action {
   readonly type = ChatActionTypes.LoadGeneralChatsSuccess;
-  constructor(public payload: MessageResponse[]) {}
+  constructor(public payload: ChatResponseLatest | ChatResponseMore) {}
 }
 
 export class LoadGeneralChatsFail implements Action {
@@ -37,7 +39,7 @@ export class LoadLGTMChats implements Action {
 
 export class LoadLGTMChatsSuccess implements Action {
   readonly type = ChatActionTypes.LoadLGTMChatsSuccess;
-  constructor(public payload: MessageResponse[]) {}
+  constructor(public payload: ChatResponseLatest | ChatResponseMore) {}
 }
 
 export class LoadLGTMChatsFail implements Action {
@@ -52,12 +54,16 @@ export class LoadTechnologyChats implements Action {
 
 export class LoadTechnologyChatsSuccess implements Action {
   readonly type = ChatActionTypes.LoadTechnologyChatsSuccess;
-  constructor(public payload: MessageResponse[]) {}
+  constructor(public payload: ChatResponseLatest | ChatResponseMore) {}
 }
 
 export class LoadTechnologyChatsFail implements Action {
   readonly type = ChatActionTypes.LoadTechnologyChatsFail;
   constructor(public payload: any) {}
+}
+
+export class ClearMessages implements Action {
+  readonly type = ChatActionTypes.ClearMessages;
 }
 
 export type ChatActions =
@@ -69,4 +75,5 @@ export type ChatActions =
   | LoadLGTMChatsFail
   | LoadTechnologyChats
   | LoadTechnologyChatsSuccess
-  | LoadTechnologyChatsFail;
+  | LoadTechnologyChatsFail
+  | ClearMessages;

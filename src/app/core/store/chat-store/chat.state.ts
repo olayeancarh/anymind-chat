@@ -1,11 +1,11 @@
-import { MessageResponse } from "../../models";
+import { ChatResponseLatest, ChatResponseMore, MessageResponse } from "../../models";
 
 export interface ChatData {
   isLoading: boolean;
   error: any;
-  general: MessageResponse[];
-  lgtm: MessageResponse[];
-  technology: MessageResponse[];
+  general: ChatResponseLatest | ChatResponseMore | undefined;
+  lgtm: ChatResponseLatest | ChatResponseMore | undefined;
+  technology: ChatResponseLatest | ChatResponseMore | undefined;
 }
 
 export interface ChatState {
@@ -15,7 +15,7 @@ export interface ChatState {
 export const initialChatState: ChatData = {
   isLoading: false,
   error: null,
-  general: [],
-  lgtm: [],
-  technology: [],
+  general: undefined,
+  lgtm: undefined,
+  technology: undefined,
 }

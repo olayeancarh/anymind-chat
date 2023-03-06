@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import {
   Channel,
   MessageReq,
@@ -7,6 +8,16 @@ import {
   User,
 } from 'src/app/core/models';
 import { ChatService } from 'src/app/core/services/chat.service';
+import {
+  ClearMessages,
+  LoadGeneralChats,
+  LoadLGTMChats,
+  LoadTechnologyChats,
+  getGeneralChats,
+  getLGTMChats,
+  getTechnologyChats,
+} from 'src/app/core/store/chat-store';
+import { AppState } from 'src/app/core/store/root-state';
 
 @Component({
   selector: 'app-chat',
@@ -21,20 +32,22 @@ export class ChatComponent implements OnInit {
   loading: boolean = false;
   chatDetails: any = {};
 
-  constructor(private chatService: ChatService) {}
+  constructor(
+    private chatService: ChatService,
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit(): void {}
 
   setSelectedUser(event: any): void {
     this.user = event;
-    this.channel && this.getLatestMessages({ channelId: this.channel.channelId });
-    this.chatDetails = { ...this.chatDetails, user: this.user }
+    this.chatDetails = { ...this.chatDetails, user: this.user };
   }
 
   setSelectedChannel(event: any): void {
     this.channel = event;
-    this.chatDetails = { ...this.chatDetails, channel: this.channel }
-    this.user && this.getLatestMessages({ channelId: this.channel.channelId });
+    this.chatDetails = { ...this.chatDetails, channel: this.channel };
+    this.user && this.getMessages({ channelId: this.channel.channelId });
   }
 
   postUserMessage(event: any): void {
@@ -47,10 +60,19 @@ export class ChatComponent implements OnInit {
 
       this.chatService.postMessage(data).subscribe({
         next: ({ data }) => {
-          if (data) { this.messages.push({ ...data.postMessage, notsent: false }) }
+          if (data) {
+            this.getMessages({ channelId: this.channel.channelId });
+          }
         },
         error: (error) => {
-          if (error) {this.messages.push({ ...data, notsent: true, messageId: '', datetime: ''})}
+          if (error) {
+            this.messages.push({
+              ...data,
+              notsent: true,
+              messageId: '',
+              datetime: new Date().toString(),
+            });
+          }
         },
       });
     }
@@ -65,27 +87,58 @@ export class ChatComponent implements OnInit {
         ? this.messages[0].messageId
         : this.messages[this.messages.length - 1].messageId,
     };
-    this.getMoreMessages(data);
+    this.getMessages(data);
   }
 
-  getLatestMessages(messageValues: MessageReq): void {
-    this.chatService
-      .getLatestMessages(messageValues)
-      .subscribe(({ data, loading }) => {
-        this.messages = [...data.fetchLatestMessages].reverse();
-        this.loading = loading;
-      });
+  getMessages(payload: MessageReq): void {
+    const fetchMore = payload.messageId && payload.old ? true : false;
+    switch (payload.channelId) {
+      case '1':
+        this.store.dispatch(new LoadGeneralChats(payload));
+        this.store
+          .select(getGeneralChats)
+          .subscribe((value: any) => this.sortMessages(value, fetchMore));
+        break;
+
+      case '2':
+        this.store.dispatch(new LoadLGTMChats(payload));
+        this.store
+          .select(getLGTMChats)
+          .subscribe((value: any) => this.sortMessages(value, fetchMore));
+        break;
+
+      case '3':
+        this.store.dispatch(new LoadTechnologyChats(payload));
+        this.store
+          .select(getTechnologyChats)
+          .subscribe((value: any) => this.sortMessages(value, fetchMore));
+        break;
+
+      default:
+        break;
+    }
   }
 
-  getMoreMessages(messageValues: MessageReq): void {
-    this.chatService
-      .getMoreMessages(messageValues)
-      .subscribe(({ data, loading }) => {
-        const new_messages = [...data.fetchMoreMessages].reverse();
-        this.messages = this.old
-          ? [...new_messages, ...this.messages]
-          : [...this.messages, ...new_messages];
-        this.loading = loading;
-      });
+  sortMessages(messageValue: any, fetchMore: boolean): void {
+    if (messageValue) {
+      let data = messageValue.data;
+      let message_arr = fetchMore ? data.fetchMoreMessages : data.fetchLatestMessages;
+
+      if (message_arr) {
+        let new_messages = [...message_arr].reverse();
+
+        if (fetchMore) {
+          this.messages = this.old
+            ? [...new_messages, ...this.messages]
+            : [...this.messages, ...new_messages];
+        } else {
+          this.messages = [...new_messages];
+        }
+
+        this.store.dispatch(new ClearMessages());
+      }
+
+
+    }
   }
 }

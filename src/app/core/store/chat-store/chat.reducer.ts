@@ -39,6 +39,10 @@ export const chatReducer = (state = initialChatState, action: ChatActions): Chat
       return { ...state, isLoading: false, error: action.payload };
     }
 
+    case ChatActionTypes.ClearMessages: {
+      return { ...state, lgtm: undefined, technology: undefined, general: undefined};
+    }
+
     default: {
       return state;
     }
